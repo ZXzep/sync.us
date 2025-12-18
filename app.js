@@ -1,10 +1,14 @@
 gsap.registerPlugin(ScrollTrigger);
 
-// ⚠️ API KEY เดิมของคุณ
-const GEMINI_API_KEY = "AIzaSyB0GiJ4QJjIwkzw_W43nZIwAE6VmSPtL1M"; 
+// --- CONFIG ---
+const GEMINI_API_KEY = "AIzaSyB0GiJ4QJjIwkzw_W43nZIwAE6VmSPtL1M"; // คีย์ AI เดิม
 const startDate = new Date("2025-02-13T19:05:00");
 
-// 1. Time Logic
+// --- CLOUD CONFIG (JSONBin.io) ---
+const BIN_ID = "69441e48d0ea881f40326a5f"; // ✅ เลขกล่อง
+const API_KEY = "$2a$10$QamMd.vgRZdBKZx1H3wfDOYf55PD32oeSYjOJLygyVAUNnEcTTTKS"; // ✅ กุญแจลับ
+
+// 1. Time Logic (Integer Months)
 function updateClock() {
     const now = new Date();
     const diff = now.getTime() - startDate.getTime();
@@ -16,7 +20,6 @@ function updateClock() {
 
     const summaryEl = document.getElementById('time-summary');
     if (summaryEl) {
-        // แก้ตรงนี้: จัด Layout ของ MONTHS ให้สวยงามใต้ตัวเลขยักษ์
         const labelClass = "text-xl md:text-4xl block mt-4 font-sans tracking-widest text-blush-dark font-light opacity-80";
         
         if (totalMonths >= 12) {
@@ -62,44 +65,92 @@ function createHeart() {
     });
 }
 
-// 3. Note System
-document.addEventListener('DOMContentLoaded', () => {
-    flatpickr("#note-date", {
-        defaultDate: "today", dateFormat: "Y-m-d", disableMobile: true, monthSelectorType: "static",
-        onChange: () => loadNote()
-    });
-    loadNote();
-});
-
-function saveNote() {
-    const text = document.getElementById('note-input').value.trim();
-    const author = document.getElementById('note-author').value.trim() || "Us";
-    const now = new Date();
-    const todayKey = now.toISOString().split('T')[0];
-    const time = now.toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' });
-
-    if (!text) return alert("Please write something...");
-    let notes = JSON.parse(localStorage.getItem(`notes_${todayKey}`)) || [];
-    notes.unshift({ text, author, time });
-    localStorage.setItem(`notes_${todayKey}`, JSON.stringify(notes));
-    document.getElementById('note-input').value = "";
-    loadNote();
-}
-
-function loadNote() {
+// 3. Cloud Note System ☁️
+async function loadNote() {
+    const display = document.getElementById('note-display');
     const dateInput = document.getElementById('note-date');
     if (!dateInput) return;
-    const date = dateInput.value;
-    const display = document.getElementById('note-display');
-    const notes = JSON.parse(localStorage.getItem(`notes_${date}`)) || [];
-    display.innerHTML = notes.length ? notes.map(n => `
-        <div class="note-item">
-            <p class="text-sm mb-1 font-serif italic">"${n.text}"</p>
-            <div class="flex justify-between text-[9px] font-sans uppercase tracking-wider opacity-70">
-                <span>— ${n.author}</span><span>${n.time}</span>
+
+    // Loading State
+    display.innerHTML = '<div class="flex flex-col items-center justify-center py-10 opacity-50"><div class="w-6 h-6 border-2 border-cocoa border-t-transparent rounded-full animate-spin mb-2"></div><span class="text-xs font-serif italic">Syncing Diary...</span></div>';
+
+    try {
+        const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, {
+            headers: { 'X-Master-Key': API_KEY }
+        });
+        
+        if (!res.ok) throw new Error("Load Failed");
+
+        const data = await res.json();
+        const allNotes = data.record || {}; 
+        
+        const selectedDate = dateInput.value;
+        const notes = allNotes[selectedDate] || [];
+
+        // Render Notes
+        display.innerHTML = notes.length ? notes.map(n => `
+            <div class="note-item animate-fade-in">
+                <p class="text-sm mb-1 font-serif italic">"${n.text}"</p>
+                <div class="flex justify-between text-[9px] font-sans uppercase tracking-wider opacity-70">
+                    <span>— ${n.author}</span><span>${n.time}</span>
+                </div>
             </div>
-        </div>
-    `).join('') : '<p class="text-xs opacity-50 italic py-6 text-center font-serif">No notes recorded.</p>';
+        `).join('') : '<p class="text-xs opacity-50 italic py-6 text-center font-serif">Page is blank...</p>';
+
+        window.currentCloudData = allNotes; // Cache data
+
+    } catch (e) {
+        console.error(e);
+        display.innerHTML = '<p class="text-xs text-red-400 italic py-6 text-center font-serif">Sync Error! (Check Connection)</p>';
+    }
+}
+
+async function saveNote() {
+    const text = document.getElementById('note-input').value.trim();
+    const author = document.getElementById('note-author').value.trim() || "Us";
+    
+    if (!text) return alert("Please write something...");
+
+    const saveBtn = document.querySelector('button[onclick="saveNote()"]');
+    const originalBtnText = saveBtn.innerText;
+    saveBtn.innerText = "Saving...";
+    saveBtn.disabled = true;
+    saveBtn.classList.add("opacity-50", "cursor-not-allowed");
+
+    try {
+        const now = new Date();
+        const todayKey = now.toISOString().split('T')[0];
+        const time = now.toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' });
+        
+        // ใช้ข้อมูลล่าสุดที่โหลดมา หรือสร้างใหม่
+        let allNotes = window.currentCloudData || {};
+        if (!allNotes[todayKey]) allNotes[todayKey] = [];
+        
+        // เพิ่มโน้ตใหม่
+        allNotes[todayKey].unshift({ text, author, time });
+
+        // ยิงขึ้น Cloud
+        await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                "X-Master-Key": API_KEY
+            },
+            body: JSON.stringify(allNotes)
+        });
+
+        // สำเร็จ: เคลียร์ค่าและโหลดใหม่
+        document.getElementById('note-input').value = "";
+        loadNote(); 
+
+    } catch (e) {
+        alert("Save Failed! Please check internet connection.");
+        console.error(e);
+    } finally {
+        saveBtn.innerText = originalBtnText;
+        saveBtn.disabled = false;
+        saveBtn.classList.remove("opacity-50", "cursor-not-allowed");
+    }
 }
 
 // 4. Chat AI
@@ -173,8 +224,21 @@ const initBday = (m, d, id) => {
     if(el) el.innerText = `Next Birthday in ${Math.ceil((b - now) / 86400000)} Days`;
 };
 
-setInterval(updateClock, 1000);
-setInterval(createHeart, 800);
-updateClock();
-initBday(9, 2, "my-bday-text");
-initBday(7, 6, "fan-bday-text");
+// Start System
+document.addEventListener('DOMContentLoaded', () => {
+    // Setup Calendar
+    flatpickr("#note-date", {
+        defaultDate: "today", dateFormat: "Y-m-d", disableMobile: true, monthSelectorType: "static",
+        onChange: () => loadNote()
+    });
+    
+    // Load Initial Cloud Data
+    loadNote();
+
+    // Start Loops
+    setInterval(updateClock, 1000);
+    setInterval(createHeart, 800);
+    updateClock();
+    initBday(9, 2, "my-bday-text");
+    initBday(7, 6, "fan-bday-text");
+});
