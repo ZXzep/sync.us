@@ -1,0 +1,105 @@
+body, section { 
+    background-color: #000000 !important; 
+    font-family: 'Mitr', sans-serif; 
+}
+
+.font-tech { font-family: 'JetBrains Mono', monospace; }
+
+/* Section Titles */
+.section-title {
+    font-family: 'Mitr', sans-serif;
+    color: #ff2d75;
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-bottom: 4rem;
+    text-align: center;
+    position: relative;
+    z-index: 10;
+}
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 25px;
+    height: 2px;
+    background: #ff2d75;
+}
+
+/* Glassmorphism */
+.glass-card { 
+    background: rgba(255, 255, 255, 0.02); 
+    backdrop-filter: blur(15px); 
+    border: 1px solid rgba(255, 45, 117, 0.15); 
+}
+
+/* --- Flip Clock Desktop --- */
+.flip-unit { text-align: center; flex: 1; max-width: 200px; }
+.flip-unit p { font-size: 11px; margin-top: 15px; font-family: 'JetBrains Mono'; opacity: 0.4; letter-spacing: 0.2em; }
+.flip-card {
+    font-size: 6rem;
+    font-weight: 800;
+    padding: 1rem 1.5rem;
+    border-radius: 1.5rem;
+    width: 100%;
+    min-width: 160px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255, 45, 117, 0.04);
+    line-height: 1;
+}
+
+.hero-title { font-size: 5rem; }
+
+/* --- Responsive Mobile (768px และต่ำกว่า) --- */
+@media (max-width: 768px) {
+    .hero-title { font-size: 2.8rem; }
+    
+    .flip-card {
+        font-size: 2rem !important;
+        min-width: 75px !important;
+        padding: 0.8rem 0.5rem !important;
+        border-radius: 1rem;
+    }
+    
+    .flip-unit p {
+        font-size: 8px !important;
+        margin-top: 10px;
+        letter-spacing: 0.1em;
+    }
+    
+    #navbar {
+        width: 90%;
+        justify-content: space-around;
+        top: 20px;
+    }
+}
+
+.neon-pink { color: #ff2d75; text-shadow: 0 0 15px rgba(255, 45, 117, 0.6); }
+
+/* Nav Active */
+.nav-active {
+    background: rgba(255, 255, 255, 0.03) !important;
+    border: 1px solid rgba(255, 77, 109, 0.3) !important;
+    backdrop-filter: blur(20px);
+}
+
+#hearts-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+}
+.heart { position: absolute; color: #ff2d75; pointer-events: none; }
+.heart-beat { animation: heartBeat 1.2s infinite; text-shadow: 0 0 20px #ff2d75; }
+@keyframes heartBeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+.avatar-ring {
+    padding: 4px;
+    background: linear-gradient(45deg, rgba(255, 45, 117, 0.4), transparent);
+    border-radius: 50%;
+}
