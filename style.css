@@ -1,105 +1,82 @@
-body, section { 
-    background-color: #000000 !important; 
-    font-family: 'Mitr', sans-serif; 
+/* --- Global Reset & Invisible Scroll --- */
+* {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+*::-webkit-scrollbar {
+    display: none; /* Chrome, Safari and Opera */
 }
 
-.font-tech { font-family: 'JetBrains Mono', monospace; }
+/* --- Typography --- */
+.hero-title { font-size: 2.8rem; }
+@media (min-width: 768px) { .hero-title { font-size: 4.5rem; } }
 
-/* Section Titles */
-.section-title {
-    font-family: 'Mitr', sans-serif;
-    color: #ff2d75;
-    font-size: 1.2rem;
+/* --- Components --- */
+.elegant-card-light {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(31, 22, 20, 0.1);
+}
+
+/* --- Flatpickr (Calendar Theme) --- */
+.flatpickr-calendar {
+    background: #2C2220 !important;
+    border: 1px solid #FFC4D6 !important;
+    border-radius: 8px !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2) !important;
+}
+.flatpickr-months .flatpickr-month, .flatpickr-weekdays { background: #2C2220 !important; color: #FFC4D6 !important; }
+.flatpickr-day { color: #FFC4D6 !important; }
+.flatpickr-day.selected, .flatpickr-day:hover {
+    background: #FFC4D6 !important;
+    color: #1F1614 !important;
+    border-color: #FFC4D6 !important;
+}
+
+/* --- Note Item --- */
+.note-item {
+    border-left: 3px solid #1F1614;
+    padding-left: 1rem;
+    margin-bottom: 1rem;
+}
+.note-item p { color: #1F1614; }
+.note-item span { color: rgba(31, 22, 20, 0.6); }
+
+/* --- Chat UI --- */
+#chat-box {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 15px !important;
+}
+.user-msg {
+    align-self: flex-end !important;
+    background: #FFC4D6; 
+    color: #1F1614; 
+    padding: 10px 16px; 
+    border-radius: 12px 12px 0 12px;
+    max-width: 85%;
+    font-family: 'Montserrat', sans-serif;
     font-weight: 500;
-    margin-bottom: 4rem;
-    text-align: center;
-    position: relative;
-    z-index: 10;
+    font-size: 0.85rem;
+    box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.1);
 }
-.section-title::after {
-    content: '';
-    position: absolute;
-    bottom: -15px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 25px;
-    height: 2px;
-    background: #ff2d75;
+.ai-msg {
+    align-self: flex-start !important;
+    background: #2C2220; 
+    border: 1px solid rgba(255, 196, 214, 0.3);
+    color: #FFC4D6; 
+    padding: 10px 16px;
+    border-radius: 12px 12px 12px 0;
+    max-width: 85%;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    font-size: 0.85rem;
 }
-
-/* Glassmorphism */
-.glass-card { 
-    background: rgba(255, 255, 255, 0.02); 
-    backdrop-filter: blur(15px); 
-    border: 1px solid rgba(255, 45, 117, 0.15); 
+.ai-msg.opacity-50 {
+    background: transparent; border: none; padding: 0;
+    font-style: italic; color: #D496A7;
 }
 
-/* --- Flip Clock Desktop --- */
-.flip-unit { text-align: center; flex: 1; max-width: 200px; }
-.flip-unit p { font-size: 11px; margin-top: 15px; font-family: 'JetBrains Mono'; opacity: 0.4; letter-spacing: 0.2em; }
-.flip-card {
-    font-size: 6rem;
-    font-weight: 800;
-    padding: 1rem 1.5rem;
-    border-radius: 1.5rem;
-    width: 100%;
-    min-width: 160px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: rgba(255, 45, 117, 0.04);
-    line-height: 1;
-}
-
-.hero-title { font-size: 5rem; }
-
-/* --- Responsive Mobile (768px และต่ำกว่า) --- */
-@media (max-width: 768px) {
-    .hero-title { font-size: 2.8rem; }
-    
-    .flip-card {
-        font-size: 2rem !important;
-        min-width: 75px !important;
-        padding: 0.8rem 0.5rem !important;
-        border-radius: 1rem;
-    }
-    
-    .flip-unit p {
-        font-size: 8px !important;
-        margin-top: 10px;
-        letter-spacing: 0.1em;
-    }
-    
-    #navbar {
-        width: 90%;
-        justify-content: space-around;
-        top: 20px;
-    }
-}
-
-.neon-pink { color: #ff2d75; text-shadow: 0 0 15px rgba(255, 45, 117, 0.6); }
-
-/* Nav Active */
-.nav-active {
-    background: rgba(255, 255, 255, 0.03) !important;
-    border: 1px solid rgba(255, 77, 109, 0.3) !important;
-    backdrop-filter: blur(20px);
-}
-
-#hearts-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-    pointer-events: none;
-}
-.heart { position: absolute; color: #ff2d75; pointer-events: none; }
-.heart-beat { animation: heartBeat 1.2s infinite; text-shadow: 0 0 20px #ff2d75; }
-@keyframes heartBeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
-.avatar-ring {
-    padding: 4px;
-    background: linear-gradient(45deg, rgba(255, 45, 117, 0.4), transparent);
-    border-radius: 50%;
-}
+/* --- Hearts --- */
+#hearts-container { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+.heart { position: absolute; color: #ffffff; opacity: 0.15; }

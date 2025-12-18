@@ -2,77 +2,180 @@
 <html lang="th">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>SYNC.US | 13.02.2025</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@300;400;600&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@300;400&family=Montserrat:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'cocoa': '#1F1614',      /* น้ำตาลเข้ม */
+                        'cocoa-light': '#2C2220', /* น้ำตาลอ่อน */
+                        'blush': '#FFC4D6',      /* ชมพูพาสเทล */
+                        'blush-dark': '#D496A7'  /* ชมพูเข้ม */
+                    },
+                    fontFamily: {
+                        'serif': ['"Playfair Display"', 'serif'],
+                        'sans': ['"Montserrat"', '"Mitr"', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
 </head>
-<body class="bg-black text-white overflow-x-hidden">
+<body class="font-sans overflow-x-hidden selection:bg-cocoa selection:text-blush">
 
     <div id="hearts-container"></div>
 
-    <nav id="navbar" class="fixed top-6 left-1/2 -translate-x-1/2 z-50 px-8 py-3 rounded-full transition-all duration-500 flex gap-4 md:gap-8 text-[9px] md:text-[10px] font-tech tracking-[0.2em] text-gray-400">
-        <a href="#hero" class="hover:text-pink-500 transition-all">HOME</a>
-        <a href="#profiles" class="hover:text-pink-500 transition-all">ABOUT US</a>
-        <a href="#anniversary" class="hover:text-pink-500 transition-all">TIME</a>
+    <nav id="navbar" class="fixed top-4 left-1/2 -translate-x-1/2 z-50 
+        bg-[#1F1614]/90 backdrop-blur-md 
+        border border-[#FFC4D6]/30 
+        px-6 py-3 rounded-full shadow-2xl 
+        transition-all duration-500 
+        flex gap-6 md:gap-8 
+        text-[9px] md:text-xs font-serif tracking-[0.2em] text-[#FFC4D6] uppercase w-[90%] md:w-auto justify-center whitespace-nowrap overflow-x-auto">
+        
+        <a href="#hero" class="hover:text-white hover:scale-110 transition-all relative group">HOME</a>
+        <a href="#profiles" class="hover:text-white hover:scale-110 transition-all relative group">US</a>
+        <a href="#anniversary" class="hover:text-white hover:scale-110 transition-all relative group">TIME</a>
+        <a href="#notes" class="hover:text-white hover:scale-110 transition-all relative group">NOTES</a>
+        <a href="#chatbot" class="hover:text-white hover:scale-110 transition-all relative group">AI</a>
     </nav>
 
-    <section id="hero" class="h-screen flex flex-col items-center justify-center relative bg-black">
-        <div class="z-10 text-center px-6">
-            <h1 class="font-tech text-pink-500 tracking-[0.3em] text-xs md:text-sm mb-4 opacity-80">PROJECT: SYNC.US</h1>
-            <h2 class="hero-title font-bold mb-6 tracking-tight">เรามีกันและกัน</h2>
-            <p class="text-base md:text-xl text-gray-400 font-light max-w-lg mx-auto leading-relaxed">
-                เห็นชอบถามบ่อยๆ ว่าเราคบกันมากี่เดือนกี่วันแล้ว <br class="hidden md:block">
-                เลยทำระบบนี้ขึ้นมาสรุปให้เลย จะได้ไม่ต้องนั่งนึกให้เสียเวลา
+    <section id="hero" class="h-screen flex flex-col items-center justify-center relative bg-cocoa text-blush pattern-bg">
+        <div class="z-10 text-center px-6 py-10 max-w-4xl mx-auto relative border-y border-blush/20 md:border-blush/30">
+            <div class="absolute top-0 left-0 w-3 h-3 border-t border-l border-blush"></div>
+            <div class="absolute top-0 right-0 w-3 h-3 border-t border-r border-blush"></div>
+            <div class="absolute bottom-0 left-0 w-3 h-3 border-b border-l border-blush"></div>
+            <div class="absolute bottom-0 right-0 w-3 h-3 border-b border-r border-blush"></div>
+
+            <h1 class="font-sans text-blush-dark tracking-[0.3em] text-[10px] md:text-sm mb-4 uppercase">Project: Sync.us</h1>
+            <h2 class="hero-title font-serif italic mb-4 tracking-wide text-blush">We belong together</h2>
+            <p class="text-xs md:text-lg text-blush/70 font-light max-w-xs md:max-w-lg mx-auto leading-relaxed">
+                บันทึกการเดินทางของเราสองคน <br>
+                เก็บทุกความทรงจำไว้ที่นี่ตลอดไป
             </p>
         </div>
     </section>
 
-    <section id="profiles" class="min-h-screen py-20 flex flex-col items-center justify-center relative bg-black">
-        <h2 class="section-title">ABOUT US</h2>
-        <div class="max-w-6xl w-full flex flex-col md:flex-row items-center justify-center gap-12 md:gap-24 relative z-10 px-6">
+    <section id="profiles" class="min-h-screen py-24 flex flex-col items-center justify-center bg-blush text-cocoa relative px-6">
+        <h2 class="section-title font-serif italic text-4xl mb-12 text-cocoa">About Us</h2>
+        <div class="w-full flex flex-col md:flex-row items-center justify-center gap-10 md:gap-20 z-10">
             
-            <div class="profile-card glass-card group p-8 md:p-10 rounded-[2.5rem] md:rounded-[3rem] flex flex-col items-center transition-all duration-700 hover:bg-white/5 w-full md:w-auto">
-                <div class="avatar-ring w-40 h-40 md:w-56 md:h-56 mb-6 md:mb-8 overflow-hidden">
-                    <img src="asset/nu.jpg" class="w-full h-full object-cover rounded-full">
+            <div class="elegant-card-light group p-8 w-full max-w-[320px] flex flex-col items-center text-center bg-white/40 backdrop-blur-sm border border-cocoa/10 rounded-[2rem] shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-500">
+                <div class="w-48 h-48 md:w-56 md:h-56 mb-6 p-2 border border-cocoa/30 rounded-full relative">
+                    <div class="w-full h-full rounded-full overflow-hidden">
+                        <img src="./asset/nu.jpg" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/300?text=P-NU'">
+                    </div>
                 </div>
-                <h3 class="text-2xl md:text-3xl font-bold font-tech mb-4 uppercase">P'NU</h3>
-                <div class="max-h-0 opacity-0 group-hover:max-h-[100px] group-hover:opacity-100 transition-all duration-700 ease-in-out overflow-hidden text-center">
-                    <p class="font-mono text-pink-500 text-[10px] mb-1 tracking-widest uppercase">Born: 02.09.2002</p>
-                    <div id="my-bday-text" class="text-white font-tech text-[11px] md:text-[12px] tracking-tight">Next Birthday in -- Days</div>
-                </div>
+                <h3 class="text-3xl font-serif text-cocoa mb-2">P'Nu</h3>
+                <div class="h-[1px] w-12 bg-cocoa/50 mb-4"></div>
+                <p class="font-sans text-cocoa/70 text-xs tracking-widest uppercase mb-1">02.09.2002</p>
+                <div id="my-bday-text" class="text-cocoa/60 text-[10px] font-sans font-medium">Next Birthday in -- Days</div>
             </div>
 
-            <div class="heart-beat text-5xl md:text-8xl py-6 md:py-10">❤️</div>
+            <div class="font-serif text-4xl text-cocoa/40 italic transform rotate-90 md:rotate-0 my-[-10px] md:my-0">&</div>
 
-            <div class="profile-card glass-card group p-8 md:p-10 rounded-[2.5rem] md:rounded-[3rem] flex flex-col items-center transition-all duration-700 hover:bg-white/5 w-full md:w-auto">
-                <div class="avatar-ring w-40 h-40 md:w-56 md:h-56 mb-6 md:mb-8 overflow-hidden">
-                    <img src="asset/cream.jpg" class="w-full h-full object-cover rounded-full">
+            <div class="elegant-card-light group p-8 w-full max-w-[320px] flex flex-col items-center text-center bg-white/40 backdrop-blur-sm border border-cocoa/10 rounded-[2rem] shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-500">
+                <div class="w-48 h-48 md:w-56 md:h-56 mb-6 p-2 border border-cocoa/30 rounded-full relative">
+                    <div class="w-full h-full rounded-full overflow-hidden">
+                        <img src="./asset/cream.jpg" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/300?text=N-CREAM'">
+                    </div>
                 </div>
-                <h3 class="text-2xl md:text-3xl font-bold font-tech mb-4 uppercase">N'CREAM</h3>
-                <div class="max-h-0 opacity-0 group-hover:max-h-[100px] group-hover:opacity-100 transition-all duration-700 ease-in-out overflow-hidden text-center">
-                    <p class="font-mono text-pink-500 text-[10px] mb-1 tracking-widest uppercase">Born: 06.07.2005</p>
-                    <div id="fan-bday-text" class="text-white font-tech text-[11px] md:text-[12px] tracking-tight">Next Birthday in -- Days</div>
+                <h3 class="text-3xl font-serif text-cocoa mb-2">N'Cream</h3>
+                <div class="h-[1px] w-12 bg-cocoa/50 mb-4"></div>
+                <p class="font-sans text-cocoa/70 text-xs tracking-widest uppercase mb-1">06.07.2005</p>
+                <div id="fan-bday-text" class="text-cocoa/60 text-[10px] font-sans font-medium">Next Birthday in -- Days</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="anniversary" class="min-h-screen py-20 flex flex-col items-center justify-center relative bg-cocoa text-blush px-4">
+        <div class="border border-blush/20 p-8 md:p-20 relative w-full max-w-3xl">
+            <h2 class="section-title font-serif italic text-3xl md:text-4xl mb-12 text-center text-blush">Time Together</h2>
+            
+            <div id="time-summary" class="text-blush font-serif text-[5.5rem] md:text-9xl mb-10 text-center leading-none tracking-tighter drop-shadow-2xl">
+                0 <span class="text-xl md:text-4xl block mt-4 font-sans tracking-widest text-blush-dark font-light">MONTHS</span>
+            </div>
+            
+            <div class="grid grid-cols-4 gap-2 md:gap-12 text-center mt-8 border-t border-blush/20 pt-8">
+                <div class="flip-unit">
+                    <div id="days" class="text-2xl md:text-4xl font-serif text-blush">00</div>
+                    <p class="text-[9px] md:text-[10px] tracking-widest text-blush-dark mt-2 opacity-70">DAYS</p>
+                </div>
+                <div class="flip-unit">
+                    <div id="hours" class="text-2xl md:text-4xl font-serif text-blush">00</div>
+                    <p class="text-[9px] md:text-[10px] tracking-widest text-blush-dark mt-2 opacity-70">HRS</p>
+                </div>
+                <div class="flip-unit">
+                    <div id="minutes" class="text-2xl md:text-4xl font-serif text-blush">00</div>
+                    <p class="text-[9px] md:text-[10px] tracking-widest text-blush-dark mt-2 opacity-70">MINS</p>
+                </div>
+                <div class="flip-unit">
+                    <div id="seconds" class="text-2xl md:text-4xl font-serif text-blush">00</div>
+                    <p class="text-[9px] md:text-[10px] tracking-widest text-blush-dark mt-2 opacity-70">SECS</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="anniversary" class="min-h-screen py-20 flex flex-col items-center justify-center relative bg-black">
-        <h2 class="section-title">TIME</h2>
-        <div class="flex flex-row justify-center gap-3 md:gap-10 z-10 w-full px-2">
-            <div class="flip-unit"><div id="days" class="flip-card glass-card">00</div><p>DAYS</p></div>
-            <div class="flip-unit"><div id="hours" class="flip-card glass-card">00</div><p>HOURS</p></div>
-            <div class="flip-unit"><div id="minutes" class="flip-card glass-card">00</div><p>MINS</p></div>
-            <div class="flip-unit"><div id="seconds" class="flip-card glass-card neon-pink">00</div><p>SECS</p></div>
+    <section id="notes" class="min-h-screen py-20 flex flex-col items-center justify-center relative bg-blush text-cocoa px-4">
+        <h2 class="section-title font-serif italic text-4xl mb-10 text-cocoa">Our Diary</h2>
+        
+        <div class="bg-white/40 backdrop-blur-md border border-cocoa/10 p-6 md:p-12 w-full max-w-2xl shadow-2xl relative rounded-2xl">
+            <div class="flex flex-col md:flex-row items-center justify-between mb-8 z-10 relative gap-4">
+                <span class="text-xs font-serif italic text-cocoa/70">Select Date:</span>
+                <input type="text" id="note-date" class="bg-transparent border-b border-cocoa text-cocoa font-serif text-center w-full md:w-32 focus:outline-none cursor-pointer placeholder-cocoa/50">
+            </div>
+
+            <div id="note-display" class="min-h-[200px] max-h-[300px] overflow-y-auto space-y-4 mb-8 pr-2 z-10 relative custom-scrollbar"></div>
+
+            <div class="pt-6 border-t border-cocoa/10 z-10 relative">
+                <textarea id="note-input" class="w-full bg-white/60 border border-cocoa/20 p-4 mb-3 outline-none text-sm text-cocoa placeholder-cocoa/40 font-sans focus:border-cocoa/50 transition-colors rounded-xl" placeholder="Write something special..."></textarea>
+                <div class="flex flex-col md:flex-row gap-3">
+                    <input type="text" id="note-author" class="bg-white/60 border border-cocoa/20 px-4 py-3 text-xs flex-1 text-cocoa placeholder-cocoa/40 outline-none focus:border-cocoa/50 rounded-xl" placeholder="Name">
+                    <button onclick="saveNote()" class="bg-cocoa text-blush px-6 py-3 text-xs font-bold tracking-widest hover:bg-cocoa-light transition-all uppercase rounded-xl w-full md:w-auto shadow-md">Save Note</button>
+                </div>
+            </div>
         </div>
-        <footer class="mt-32 text-gray-800 text-[9px] font-tech tracking-[0.4em] md:tracking-[0.5em] uppercase text-center px-4">
-            &copy; 2025 SYNC.US | Heartbeat Synchronized
-        </footer>
     </section>
+
+    <section id="chatbot" class="min-h-screen py-20 flex flex-col items-center justify-center relative bg-cocoa text-blush px-4">
+        <h2 class="section-title font-serif italic text-4xl mb-10 text-blush">Ask P'Nu</h2>
+        
+        <div class="bg-cocoa-light border border-blush/20 w-full max-w-md h-[550px] flex flex-col shadow-2xl relative rounded-2xl overflow-hidden">
+             <div class="bg-blush px-5 py-4 flex items-center gap-3 border-b border-cocoa/10">
+                <div class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+                <span class="text-cocoa font-serif font-bold italic text-lg">P'Nu AI</span>
+             </div>
+
+            <div id="chat-box" class="flex-1 overflow-y-auto p-5 space-y-3 text-sm font-light bg-[#1a120b]">
+                <div class="ai-msg shadow-none">สวัสดีครับคุณแฟน มีอะไรอยากคุยกับผมในร่าง AI ไหม? ❤️</div>
+            </div>
+
+            <div class="p-4 bg-cocoa-light border-t border-blush/10 flex gap-2 z-10">
+                <input type="text" id="chat-input" class="flex-1 bg-cocoa text-blush border border-blush/20 px-5 py-3 text-sm focus:border-blush outline-none placeholder-blush/30 rounded-full" placeholder="Type a message...">
+                <button onclick="sendMessage()" class="bg-blush text-cocoa w-11 h-11 flex items-center justify-center hover:scale-105 transition-all rounded-full shadow-lg">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" /></svg>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-12 bg-cocoa text-blush text-center relative border-t border-blush/10">
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-cocoa px-4">
+            <span class="text-2xl animate-pulse">❤️</span>
+        </div>
+        <p class="font-serif italic text-xl opacity-90 mb-2">Forever & Always</p>
+        <p class="text-[10px] font-sans tracking-[0.3em] opacity-40 uppercase">Sync.us © 2025 | Made with Love</p>
+    </footer>
 
     <script src="app.js"></script>
 </body>
